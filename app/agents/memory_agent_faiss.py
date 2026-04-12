@@ -1,6 +1,8 @@
 from typing import List
 import numpy as np
 import faiss
+import json
+import os
 
 
 class FAISSMemoryAgent:
