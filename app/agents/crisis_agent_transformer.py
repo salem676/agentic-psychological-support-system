@@ -21,9 +21,7 @@ class CrisisTransformerAgent:
         ]
 
     def analyze(self, message: str) -> Dict:
-        result = self.classifier(message,
-                                 self.labels,
-                                 clean_up_tokenization_spaces = True)
+        result = self.classifier(message, self.labels)
 
         top_label = result["labels"][0]
         top_score = float(result["scores"][0])

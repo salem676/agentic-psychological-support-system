@@ -18,9 +18,7 @@ class EmotionTransformerAgent:
         )
 
     def analyze(self, message: str) -> Dict:
-        result = self.classifier(message,
-                                 clean_up_tokenization_spaces = True,
-                                 )[0]
+        result = self.classifier(message)[0]
         label = result["label"].lower()
         score = float(result["score"])
 
