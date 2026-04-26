@@ -53,136 +53,73 @@ Models used:
 \-google/flan-t5-base -> hybrid response generation
 
 
+Architecture Schema:
 
 ┌──────────────────────────────┐
-
-│        User Message                   │
-
+│        User Message          │
 └────────────┬─────────────────┘
-
-&#x20;                │
-
-&#x20;                ▼ 
-
+             │
+             ▼
 ┌──────────────────────────────┐
-
-│   Emotion Transformer                 │
-
-│   - emotion label                     │
-
-│   - distress score                    │
-
+│   Emotion Transformer        │
+│   - emotion label            │
+│   - distress score           │
 └────────────┬─────────────────┘
-
-&#x20;                │
-
-&#x20;                ▼
-
+             │
+             ▼
 ┌──────────────────────────────┐
-
-│   Crisis Transformer                  │
-
-│   - suicide risk                      │
-
-│   - escalation level                  │
-
+│   Crisis Transformer         │
+│   - suicide risk             │
+│   - escalation level         │
 └────────────┬─────────────────┘
+             │
+             ▼
 
-&#x20;                │
+        Conditional Routing
 
-&#x20;                ▼
+   HIGH RISK:
+   ┌──────────────────────────┐
+   │   Crisis Response        │
+   │   - emergency support    │
+   │   - immediate escalation │
+   └────────────┬─────────────┘
+                │
+                ▼
+               END
 
-
-
-&#x20;       Conditional Routing
-
-
-
-&#x20;  HIGH RISK:
-
-&#x20;  ┌──────────────────────────┐
-
-&#x20;  │   Crisis Response                │
-
-&#x20;  │   - emergency support            │
-
-&#x20;  │   - immediate escalation         │
-
-&#x20;  └────────────┬─────────────┘
-
-&#x20;                   │
-
-&#x20;                   ▼
-
-&#x20;                  END
-
-
-
-&#x20;  NORMAL PATH:
-
-&#x20;            │
-
-&#x20;            ▼
-
+   NORMAL PATH:
+             │
+             ▼
 ┌──────────────────────────────┐◄──────────────┐
-
-│ Semantic FAISS Memory Agent           │                    │
-
-│ semantic retrieval                    │                    │
-
-│ persistent user memory                │                    │
-
-└────────────┬─────────────────┘                    │
-
-&#x20;                │                                           │
-
-&#x20;                ▼                                           │
-
-┌──────────────────────────────┐                    │
-
-│ Smart Planner Agent                   │                    │
-
-│ strategy selection                    │                    │
-
-└────────────┬─────────────────┘                    │
-
-&#x20;                │                                           │
-
-&#x20;                ▼                                           │
-
-┌──────────────────────────────┐                    │
-
-│ DBT Tool Library                      │                    │
-
-│ intervention steps                    │                    │
-
-└────────────┬─────────────────┘                    │
-
-&#x20;                │                                           │
-
-&#x20;                ▼                                           │
-
-┌──────────────────────────────┐                    │
-
-│ Hybrid Response Generator             │                    │
-
-│ planner-guided LLM response           │                    │
-
-└────────────┬─────────────────┘                    │
-
-&#x20;                │                                           │
-
-&#x20;                ▼                                           │
-
-┌──────────────────────────────┐                    │
-
-│ Response to User                      │                    │
-
-└────────────┬─────────────────┘                    │
-
-&#x20;                │                                      
-
-&#x20;                └──── write back memory ─────────
+│ Semantic FAISS Memory Agent  │               │
+│ - semantic retrieval         │               │
+│ - persistent user memory     │               │
+└────────────┬─────────────────┘               │
+             │                                 │
+             ▼                                 │
+┌──────────────────────────────┐               │
+│ Smart Planner Agent          │               │
+│ - strategy selection         │               │
+└────────────┬─────────────────┘               │
+             │                                 │
+             ▼                                 │
+┌──────────────────────────────┐               │
+│ DBT Tool Library             │               │
+│ - intervention steps         │               │
+└────────────┬─────────────────┘               │
+             │                                 │
+             ▼                                 │
+┌──────────────────────────────┐               │
+│ Hybrid Response Generator    │               │
+│ - planner-guided LLM reply   │               │
+└────────────┬─────────────────┘               │
+             │                                 │
+             ▼                                 │
+┌──────────────────────────────┐               │
+│ Response to User             │               │
+└────────────┬─────────────────┘               │
+             │                                 │
+             └──── write back memory ──────────┘
 
 Project Structure
 
