@@ -57,9 +57,7 @@ def therapy_agent(message: str, strategy: str, memories: List[str], intervention
     )
 
 
-# -----------------
 # Graph Nodes
-# -----------------
 
 def emotion_node(state: TherapyState) -> TherapyState:
     state["emotion_result"] = emotion_agent.analyze(state["message"])
@@ -108,9 +106,7 @@ def response_node(state: TherapyState) -> TherapyState:
     return state
 
 
-# -----------------
 # Simple Orchestrator (LangGraph-ready structure)
-# -----------------
 
 def run_therapy_graph(user_id: str, message: str) -> TherapyState:
     """

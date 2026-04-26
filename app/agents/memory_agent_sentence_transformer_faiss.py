@@ -7,8 +7,7 @@ from sentence_transformers import SentenceTransformer
 
 
 class SemanticFAISSMemoryAgent:
-    """Persistent multi-user semantic memory using SentenceTransformers + FAISS.
-
+    """Persistent multi user semantic memory using SentenceTransformers + FAISS.
     Improvements over hash embeddings:
     - true semantic similarity
     - stronger memory retrieval
