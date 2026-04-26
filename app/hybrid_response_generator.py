@@ -18,7 +18,7 @@ class HybridResponseGenerator:
         # Lightweight local generation model for MVP
         self.generator = pipeline(
             "text2text-generation",
-            model="google/flan-t5-base",
+            model="google/flan-t5-large",
         )
 
     def _build_prompt(
@@ -33,34 +33,21 @@ class HybridResponseGenerator:
         prompt = intervention.get("prompt", "") if intervention else ""
 
         return f"""
-You are a safe and empathetic psychological support assistant.
+        User message:
+        {message}
 
-User current message:
-{message}
+        Relevant prior memory:
+        {memory_context}
 
-Retrieved memory from previous conversations:
-{memory_context}
+        Support strategy:
+        {strategy}
 
-Chosen therapeutic strategy:
-{strategy}
+        Helpful intervention:
+        {prompt}
 
-Recommended DBT intervention steps:
-{steps}
-
-Reflection prompt:
-{prompt}
-
-Instructions:
-- Respond with empathy and emotional validation.
-- Be supportive, calm, and safe.
-- Use the prior memory naturally if relevant.
-- Do not sound robotic.
-- Do not diagnose.
-- If crisis strategy is selected, prioritize immediate safety.
-- Keep response concise but warm.
-
-Final response:
-"""
+        Write a short warm supportive therapeutic response.
+        Only write the final response.
+        """
 
     def generate(
         self,
@@ -86,12 +73,19 @@ Final response:
 
         result = self.generator(
             prompt,
-            max_length=180,
+            max_new_tokens=80,
             do_sample=True,
             temperature=0.7,
         )
+        
+        full_output = result[0]["generated_text"]
 
-        return result[0]["generated_text"].strip()
+        response = full_output.replace(prompt, "").strip()
+
+        #if not response:
+            #response = ("It sounds like this situation is weighing heavily on you." "Let's take a small step together and focus on what feels most difficult right now.")
+        
+        return response
 
 
 response_generator = HybridResponseGenerator()
