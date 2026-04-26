@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-from langgraph_orchestration import run_therapy_graph
+from langgraph_stategraph import run_therapy_graph
 
 app = FastAPI(title = "Agentic Pyschological Support MVP")
 

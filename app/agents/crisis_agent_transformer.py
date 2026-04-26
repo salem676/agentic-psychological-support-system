@@ -25,10 +25,21 @@ class CrisisTransformerAgent:
 
         top_label = result["labels"][0]
         top_score = float(result["scores"][0])
-
-        risk = top_label == "self-harm or suicide risk" and top_score > 0.55
-
-        level = "high" if risk and top_score > 0.8 else "medium" if risk else "low"
+        #modified from 0.55 to 0.80 to ensure not every case is a risk and created new logic schema
+        if top_label == "self-harm or suicide risk":
+            if top_score > 0.80:
+                risk = True
+                level = "high"
+            elif top_score > 0.60:
+                risk = False
+                level = "medium"
+            else:
+                risk = False
+                level = "low"
+        else:
+            risk = False
+            level = "low"
+        
 
         return {
             "risk": risk,

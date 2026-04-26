@@ -7,3 +7,4 @@ transformers==4.44.2
 torch==2.2.2
 datasets==2.21.0
 sentence-transformers==3.0.1
+langgraph==1.1.9

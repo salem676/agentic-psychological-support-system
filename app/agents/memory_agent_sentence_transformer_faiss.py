@@ -24,7 +24,7 @@ class SemanticFAISSMemoryAgent:
         os.makedirs(base_path, exist_ok=True)
 
         self.encoder = SentenceTransformer(model_name)
-        self.dimension = self.encoder.get_sentence_embedding_dimension()
+        self.dimension = self.encoder.get_embedding_dimension()
 
     def _paths(self, user_id: str):
         safe_user = str(user_id).replace("/", "_").replace("\\", "_")
